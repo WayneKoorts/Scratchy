@@ -5,7 +5,7 @@
         <DisplayName>Scratchy</DisplayName>
         <Description xml:space="preserve">A scratchpad / note-taking window per solution.</Description>
         <MoreInfo>https://wkoorts.com</MoreInfo>
-        <License>MIT</License>
+        <License>LICENSE.txt</License>
         <Preview>true</Preview>
     </Metadata>
     <Installation>
