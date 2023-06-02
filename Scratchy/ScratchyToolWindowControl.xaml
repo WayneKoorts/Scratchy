@@ -11,7 +11,7 @@
              Name="Scratchy">
     <!--<Grid>-->
     <UniformGrid>
-        <TextBox TextWrapping="Wrap" Text="Type your scratchpad notes here and they will be saved automatically." />
+        <TextBox TextWrapping="Wrap" Text="Type your scratchpad notes here and they will be saved automatically." AcceptsReturn="True" />
     </UniformGrid>
     <!--</Grid>-->
 </UserControl>
