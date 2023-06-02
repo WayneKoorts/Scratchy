@@ -1,5 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Windows;
+﻿using System.Windows.Media;
+using Microsoft.VisualStudio.PlatformUI;
+using Microsoft.VisualStudio.Shell;
 
 namespace Scratchy
 {
@@ -8,26 +9,36 @@ namespace Scratchy
     /// </summary>
     public partial class ScratchyToolWindowControl
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ScratchyToolWindowControl"/> class.
-        /// </summary>
         public ScratchyToolWindowControl()
         {
             InitializeComponent();
+            
+            VSColorTheme.ThemeChanged += HandleThemeChange;
+            SetToolWindowTheme();
+        }
+
+        private void SetToolWindowTheme()
+        {
+            ScratchPadTextBox.Background = new SolidColorBrush(GetColorFromVsTheme(EnvironmentColors.ToolWindowBackgroundColorKey));
+            ScratchPadTextBox.Foreground = new SolidColorBrush(GetColorFromVsTheme(EnvironmentColors.ToolWindowTextColorKey));
         }
 
         /// <summary>
-        /// Handles click on the button by displaying a message box.
+        /// Get a color from the current Visual Studio theme in a format appropriate
+        /// for WPF brushes.
         /// </summary>
-        /// <param name="sender">The event sender.</param>
-        /// <param name="e">The event args.</param>
-        [SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions", Justification = "Sample code")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Default event handler naming pattern")]
-        private void button1_Click(object sender, RoutedEventArgs e)
+        /// <param name="colorKey">A value from the <see cref="EnvironmentColors" /> class.</param>
+        /// <returns></returns>
+        private static Color GetColorFromVsTheme(ThemeResourceKey colorKey)
         {
-            MessageBox.Show(
-                string.Format(System.Globalization.CultureInfo.CurrentUICulture, "Invoked '{0}'", this.ToString()),
-                "ScratchyToolWindow");
+            var themeColour = VSColorTheme.GetThemedColor(colorKey);
+            return Color.FromRgb(themeColour.R, themeColour.G, themeColour.B);
+        }
+
+        private void HandleThemeChange(ThemeChangedEventArgs e)
+        {
+            SetToolWindowTheme();
         }
     }
+
 }
