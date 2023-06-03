@@ -24,7 +24,7 @@ namespace Scratchy
     /// </para>
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [Guid(ScratchyPackage.PackageGuidString)]
+    [Guid(PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideToolWindow(typeof(ScratchyToolWindow))]
     public sealed class ScratchyPackage : AsyncPackage
@@ -47,7 +47,7 @@ namespace Scratchy
         {
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
-            await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await ScratchyToolWindowCommand.InitializeAsync(this);
         }
 
