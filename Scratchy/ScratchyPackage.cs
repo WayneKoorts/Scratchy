@@ -1,7 +1,10 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using Microsoft.VisualStudio.Settings;
+using Microsoft.VisualStudio.Shell;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Microsoft.VisualStudio.Shell.Settings;
 using Task = System.Threading.Tasks.Task;
 
 namespace Scratchy
@@ -35,6 +38,27 @@ namespace Scratchy
         public const string PackageGuidString = "4bac9d00-91ec-4832-b437-84f7e69bb5c2";
 
         #region Package Members
+
+        private WritableSettingsStore _settingsStore;
+        public WritableSettingsStore SettingsStore
+        {
+            get
+            {
+                ThreadHelper.ThrowIfNotOnUIThread();
+                if (_settingsStore == null)
+                {
+                    var settingsManager = new ShellSettingsManager(ServiceProvider.GlobalProvider);
+                    _settingsStore = settingsManager.GetWritableSettingsStore(SettingsScope.UserSettings);
+
+                    if (_settingsStore == null)
+                    {
+                        Debug.WriteLine("An error occurred trying to initialise the VS settings store.");
+                    }
+                }
+
+                return _settingsStore;
+            }
+        }
 
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
