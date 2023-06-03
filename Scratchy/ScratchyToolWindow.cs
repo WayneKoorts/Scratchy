@@ -2,6 +2,7 @@
 using System.Globalization;
 using Microsoft.VisualStudio.Shell;
 using System.Runtime.InteropServices;
+using Microsoft.VisualStudio.Shell.Events;
 
 namespace Scratchy
 {
@@ -19,9 +20,8 @@ namespace Scratchy
     [Guid("02d2032e-661a-4831-aef3-ebbe904a2c24")]
     public class ScratchyToolWindow : ToolWindowPane
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ScratchyToolWindow"/> class.
-        /// </summary>
+        private readonly ScratchyToolWindowControl _control;
+
         public ScratchyToolWindow() : base(null)
         {
             Caption = "Scratchy";
@@ -30,7 +30,7 @@ namespace Scratchy
             // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
             // the object returned by the Content property.
-            Content = new ScratchyToolWindowControl();
+            Content = _control = new ScratchyToolWindowControl();
         }
     }
 }

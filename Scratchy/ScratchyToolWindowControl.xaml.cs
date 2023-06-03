@@ -1,6 +1,10 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
 using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Events;
+using Microsoft.VisualStudio.Shell.Interop;
+using SolutionEvents = Microsoft.VisualStudio.Shell.Events.SolutionEvents;
 
 namespace Scratchy
 {
@@ -9,12 +13,39 @@ namespace Scratchy
     /// </summary>
     public partial class ScratchyToolWindowControl
     {
+        private const string SolutionClosedPlaceholderText = "Load a solution to start writing notes.";
+
+        private const string SolutionOpenPlaceholderText = "Type your scratchpad notes here and they will be saved automatically.";
+
         public ScratchyToolWindowControl()
         {
             InitializeComponent();
-            
+
             VSColorTheme.ThemeChanged += HandleThemeChange;
             SetToolWindowTheme();
+
+            SolutionEvents.OnAfterOpenSolution += HandleSolutionOpened;
+            SolutionEvents.OnAfterCloseSolution += HandleSolutionClosed;
+
+            if (SolutionIsOpen())
+            {
+                EnableScratchyInput();
+            }
+        }
+
+        private static IVsSolution GetSolution()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            var solution = (IVsSolution)Package.GetGlobalService(typeof(SVsSolution));
+            return solution;
+        }
+
+        private static bool SolutionIsOpen()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            GetSolution().GetProperty((int)__VSPROPID.VSPROPID_IsSolutionOpen, out var isOpen);
+
+            return (bool)isOpen;
         }
 
         private void SetToolWindowTheme()
@@ -39,6 +70,27 @@ namespace Scratchy
         {
             SetToolWindowTheme();
         }
-    }
+        
+        private void HandleSolutionOpened(object sender, OpenSolutionEventArgs e)
+        {
+            EnableScratchyInput();
+        }
 
+        private void HandleSolutionClosed(object sender, EventArgs e)
+        {
+            DisableScratchyInput();
+        }
+
+        private void EnableScratchyInput()
+        {
+            ScratchPadTextBox.Text = SolutionOpenPlaceholderText;
+            ScratchPadTextBox.IsEnabled = true;
+        }
+
+        private void DisableScratchyInput()
+        {
+            ScratchPadTextBox.Text = SolutionClosedPlaceholderText;
+            ScratchPadTextBox.IsEnabled = false;
+        }
+    }
 }

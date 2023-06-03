@@ -84,7 +84,7 @@ namespace Scratchy
         {
             _package.JoinableTaskFactory.RunAsync(async delegate
             {
-                var window = await this._package.ShowToolWindowAsync(
+                var window = await _package.ShowToolWindowAsync(
                     typeof(ScratchyToolWindow), 
                     0,
                     true,

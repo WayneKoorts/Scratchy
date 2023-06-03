@@ -9,9 +9,14 @@
              mc:Ignorable="d"
              d:DesignHeight="374.818" d:DesignWidth="331.084"
              Name="Scratchy">
-    <!--<Grid>-->
     <UniformGrid>
-        <TextBox x:Name="ScratchPadTextBox" TextWrapping="Wrap" Text="Type your scratchpad notes here and they will be saved automatically." AcceptsReturn="True" BorderBrush="#00ABADB3" />
+        <TextBox 
+            x:Name="ScratchPadTextBox"
+            TextWrapping="Wrap"
+            Text="Load a solution to start writing notes."
+            AcceptsReturn="True"
+            BorderBrush="#00ABADB3"
+            IsEnabled="False"
+        />
     </UniformGrid>
-    <!--</Grid>-->
 </UserControl>
