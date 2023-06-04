@@ -4,7 +4,7 @@
         <Identity Id="Scratchy.f9ec8740-55fa-487e-8e44-1150e8a3f9fa" Version="1.0" Language="en-US" Publisher="Wayne Koorts" />
         <DisplayName>Scratchy</DisplayName>
         <Description xml:space="preserve">A scratchpad / note-taking window per solution.</Description>
-        <MoreInfo>https://wkoorts.com</MoreInfo>
+        <MoreInfo>https://github.com/WayneKoorts/Scratchy</MoreInfo>
         <License>LICENSE.txt</License>
         <Preview>true</Preview>
     </Metadata>
