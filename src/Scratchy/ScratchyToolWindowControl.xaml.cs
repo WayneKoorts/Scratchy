@@ -35,18 +35,18 @@ namespace Scratchy
                 _scratchy = (ScratchyPackage)scratchyPackage;
             }
 
+            if (SolutionIsOpen())
+            {
+                EnableScratchyInput();
+                _scratchy.JoinableTaskFactory.Run(RetrieveSavedSolutionNotesAsync);
+            }
+
             VSColorTheme.ThemeChanged += HandleThemeChange;
             SetToolWindowTheme();
 
             SolutionEvents.OnAfterOpenSolution += HandleSolutionOpened;
             SolutionEvents.OnBeforeCloseSolution += HandleSolutionAboutToClose;
             SolutionEvents.OnAfterCloseSolution += HandleSolutionClosed;
-
-            if (SolutionIsOpen())
-            {
-                _scratchy.JoinableTaskFactory.Run(RetrieveSavedSolutionNotesAsync);
-                EnableScratchyInput();
-            }
         }
 
         private async Task RetrieveSavedSolutionNotesAsync()
@@ -93,6 +93,7 @@ namespace Scratchy
 
         private static async Task<Solution> GetDteSolutionAsync()
         {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             var dte = (DTE) await ServiceProvider.GetGlobalServiceAsync(typeof(DTE));
             var solution = dte.Solution;
 
