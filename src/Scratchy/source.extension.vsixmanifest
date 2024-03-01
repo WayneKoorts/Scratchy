@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="Scratchy.f9ec8740-55fa-487e-8e44-1150e8a3f9fa" Version="1.4.0" Language="en-US" Publisher="Wayne Koorts" />
+        <Identity Id="Scratchy.f9ec8740-55fa-487e-8e44-1150e8a3f9fa" Version="1.4.1" Language="en-US" Publisher="Wayne Koorts" />
         <DisplayName>Scratchy</DisplayName>
         <Description xml:space="preserve">A scratchpad / note-taking window per solution.</Description>
         <MoreInfo>https://github.com/WayneKoorts/Scratchy</MoreInfo>
@@ -22,7 +22,7 @@
         <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
     </Dependencies>
     <Prerequisites>
-        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,17.8]" DisplayName="Visual Studio core editor" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,17.9]" DisplayName="Visual Studio core editor" />
     </Prerequisites>
     <Assets>
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
